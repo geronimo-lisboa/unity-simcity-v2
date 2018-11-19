@@ -24,6 +24,7 @@ public class PositionPicker : MonoBehaviour
             {
                 Vector3 hitpoint = hit.point;
                 MyRoadController.AddPoint(hitpoint);
+
             }
         }
     }

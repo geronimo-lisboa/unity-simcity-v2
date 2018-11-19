@@ -16,9 +16,42 @@ public class RoadContoller : MonoBehaviour
 
     public float distanceFromGround = 0.2f;
     public float width = 0.5f;
+    public GameObject surface;
+
+    private List<Vector3> GenerateIntermediaryPoints(Vector3 pf)
+    {
+        List<Vector3> intermediatePoints = new List<Vector3>();
+        //Must have at least 2 points.
+        if (controlPoints.Count < 1)
+            return new List<Vector3>();
+        //preparação dos dados
+        Vector3 p0 = controlPoints.Last();
+        Vector3 direction = (pf - p0).normalized;
+        float magnitude = (pf - p0).magnitude;
+        float increments = magnitude / (20 - 2);//TODO: Ao invés de usar incrementos, que dão subsegmentos de tamanho variável dependendo do 
+        //do tamanho do segmento, ver quantas vezes terei que realizar o processo tendo subsegmentos de tamanho constante. (Nessa versão
+        //farei o processo (20-2). Esse -2 é pq já tenho o 1o ponto e o ultimo e n quero repeti-los
+        Vector3 rp0 = p0 + Vector3.up * 100f;//TODO provavelmente não será uma boa ideia isso ser hardcoded. O certo seria ser um pouco maior 
+        //que a altura máxima da mesh.
+        for (int i = 1; i < 20; i++)
+        {
+            var rpi = rp0 + direction * (magnitude * i * increments);
+            //raycast from rpi to the surface. Grab the hitpoint
+            Ray ray = new Ray(rpi, Vector3.down);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                Vector3 hitpoint = hit.point;
+                intermediatePoints.Add(hitpoint);
+            }
+        }
+        return intermediatePoints;
+    }
 
     public void AddPoint(Vector3 v)
     {
+        List<Vector3> intermediates = GenerateIntermediaryPoints(v);
+        controlPoints.AddRange(intermediates);
         controlPoints.Add(v);
         isDataModified = true;
     }
