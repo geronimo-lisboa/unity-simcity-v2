@@ -265,6 +265,8 @@ GameObject:
   m_Component:
   - component: {fileID: 755436221}
   - component: {fileID: 755436222}
+  - component: {fileID: 755436224}
+  - component: {fileID: 755436223}
   m_Layer: 0
   m_Name: Road Controller
   m_TagString: Untagged
@@ -296,6 +298,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112635ea27efd4e1bb730985f5ef69e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!23 &755436223
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 755436220}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &755436224
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 755436220}
+  m_Mesh: {fileID: 0}
 --- !u!1 &1326610600
 GameObject:
   m_ObjectHideFlags: 0
