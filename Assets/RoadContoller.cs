@@ -8,6 +8,8 @@ public class RoadContoller : MonoBehaviour
     private List<Vector3> controlPoints = new List<Vector3>();
     private bool isDataModified = false;
     private List<Vector3> geometry = new List<Vector3>();
+    private List<Vector2> uvs = new List<Vector2>();
+    private List<Vector3> normals = new List<Vector3>();
     private List<int> indexes = new List<int>();
     private List<Vector3> testePointPositions = new List<Vector3>();
     private Mesh mesh;
@@ -37,6 +39,8 @@ public class RoadContoller : MonoBehaviour
         testePointPositions.Clear();
         geometry.Clear();
         indexes.Clear();
+        uvs.Clear();
+        normals.Clear();
         //Para cada segmento, na ordem em que foram informados, faça
         for (var i = 0; i < controlPoints.Count - 1; i++)
         {
@@ -73,11 +77,25 @@ public class RoadContoller : MonoBehaviour
             indexes.Add(index + 2);
             indexes.Add(index + 1);
             indexes.Add(index + 3);
+            //Adds the UVs.
+            uvs.Add(new Vector2(0, 0));
+            uvs.Add(new Vector2(0, 1));
+            uvs.Add(new Vector2(1, 0));
+            uvs.Add(new Vector2(1, 1));
+
+            //TODO: normals wont be always the up vector but will depend upon the 
+            //inclination when I start using terrains with elevations
+            normals.Add(Vector3.up);
+            normals.Add(Vector3.up);
+            normals.Add(Vector3.up);
+            normals.Add(Vector3.up);
         }
         ///Put the mesh data in the filters.
         mesh.Clear();
         mesh.SetVertices(geometry);
         mesh.SetIndices(indexes.ToArray(), MeshTopology.Triangles, 0);
+        mesh.SetUVs(0, uvs);
+        mesh.SetNormals(normals);
         isDataModified = false;
     }
 
