@@ -1,0 +1,28 @@
+Metas - até 6a que vem terminar a versão 1 do sistema de ruas. O sistema de ruas tem que permitir
+criar uma malha de ruas que respeite o relevo, essa malha tem que ser um grafo e deve ser possivel
+encontrar um caminho mais curto entre dois endereços nessa malha.
+
+23/11/2018
+FAZER
+5)Com os começos, fins e interseções, criar um grafo.
+FAZENDO
+4)Usar a lista de segmentos para determinar as interseções
+FEITO
+1)Quando clicar no btn de POR RUAS ativar a criação de rua.
+2)1 click marca o inicio, 2o click marca o fim do segmento.
+3)Guardar os pontos como um segmento de reta.
+
+
+Etapas do Simcity
+I)Criar sistema de ruas básico - um grafo onde coisas possam ir de um lugar a outro
+II)Encaixar no editor de terreno básico que eu fiz
+III)Levar em conta quando deve se usar túneis e quando deve se usar pontes (depende do gradiente) 
+    e respeitar água.
+IV)Criação das casas e de seus habitantes
+V)Criação das fábricas, com os habitantes buscando ir pras fábricas
+VI)Criação dos comércios, com os produtos das fábricas indo pros comércios e habitantes indo pras compras
+VII)Implementar os conceitos de lucro, as coisas tem que acumular dinheiro
+VIII)Agora as coisas devem evoluir de acordo com seu acúmulo de dinheiro
+IX)Zoneamento
+X)Serviços públicos
+Com isso terei um MVP e em cima de sugestões poderei determinar o que ser feito.
