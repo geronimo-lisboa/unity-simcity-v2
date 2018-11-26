@@ -26,3 +26,7 @@ VIII)Agora as coisas devem evoluir de acordo com seu acúmulo de dinheiro
 IX)Zoneamento
 X)Serviços públicos
 Com isso terei um MVP e em cima de sugestões poderei determinar o que ser feito.
+
+
+0.6419616
+0.6419612

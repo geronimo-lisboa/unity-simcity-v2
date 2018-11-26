@@ -33,8 +33,15 @@ public class Line2dIntersectionService
 
 public class LineSegment2d
 {
+    private static int Counter = 0;
+    public static void ResetCounter()
+    {
+        Counter = 0;
+    }
+    public int Id { get; }
     public Vector2 Point1 { get; }
     public Vector2 Point2 { get; }
+    public LineSegment OriginalSegment { get; }
     //Esse dado veio originalmente de dois pontos 3d. Eu guardo a magnitude deles pq vou 
     //precisar de ter a relação entre a magnitude deles no 2d e no 3d pra quando eu andar
     //em um poder andar corretamente no outro.
@@ -55,6 +62,10 @@ public class LineSegment2d
         Point1 = ponto1;
         Point2 = ponto2;
         OriginalMagnitude = (p1 - p0).magnitude;
+        Id = Counter;
+        Counter++;
+        OriginalSegment = new LineSegment(p0, p1);
+        
     }
 }
 

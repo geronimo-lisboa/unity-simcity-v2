@@ -61,17 +61,14 @@ public class RoadControllerMK2 : MonoBehaviour {
     private void FindIntersections()
     {
         //Mapeia os pontos pro 2d descartando o y
-        //TODO: isso aqui não é n x n. Quando eu testo o segmento i com o segmento i+1 eu tb testo i+1 com i, então não preciso executar tantas vezes
-        //qto tá executando.
+        LineSegment2d.ResetCounter();
         var _2dSegments = segments.Select<LineSegment, LineSegment2d>(s => new LineSegment2d(s.Point1, s.Point2)).ToList();
-        for (int i = 0; i < _2dSegments.Count(); i++)
+        var _2dSegsQueue = new Queue<LineSegment2d>(_2dSegments);
+        while(_2dSegsQueue.Count > 0)
         {
-            for (int j = 0; j < _2dSegments.Count(); j++)
+            var s1 = _2dSegsQueue.Dequeue();
+            foreach(var s2 in _2dSegsQueue)
             {
-                if (_2dSegments[i] == _2dSegments[j])
-                    continue;
-                var s1 = _2dSegments[i];
-                var s2 = _2dSegments[j];
                 Vector2 intersectionIn2d;
                 bool doesIntersect = Line2dIntersectionService.LineSegmentsIntersection(s1.Point1, s1.Point2, s2.Point1, s2.Point2, out intersectionIn2d);
                 if (doesIntersect)
@@ -79,15 +76,16 @@ public class RoadControllerMK2 : MonoBehaviour {
                     //A posição paramétrica no segmento 1 do ponto de interseção. Poderia ser no segmento 2 mas tanto faz, a posição espacial vai ser a mesma.
                     float gammaP2d = (intersectionIn2d - s1.Point1).magnitude / (s1.Point2 - s1.Point1).magnitude;
                     //Relação entre as magnitudes do vetor2d e do vetor3d que corresponde a ele
-                    var R = (s1.Point2 - s1.Point1).magnitude / (segments[i].Point2 - segments[i].Point1).magnitude;
+                    var R = (s1.Point2 - s1.Point1).magnitude / s1.OriginalMagnitude;//(segments[i].Point2 - segments[i].Point1).magnitude;
                     //o parâmetro no vetor 3d
                     var gammaP3d = gammaP2d * R;
                     //o ponto da interseção no 3d
-                    var p3d = segments[i].Point1 + gammaP3d * (segments[i].Point2 - segments[i].Point1);
+                    var p3d = s1.OriginalSegment.Point1 + gammaP3d * (s1.OriginalSegment.Point2 - s1.OriginalSegment.Point1);
                     intersections.Add(p3d);
                 }
             }
         }
+
     }
 
     void OnDrawGizmos()
