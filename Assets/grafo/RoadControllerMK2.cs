@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using ExtensionMethods;
 
 public class RoadControllerMK2 : MonoBehaviour { 
 
@@ -54,15 +55,44 @@ public class RoadControllerMK2 : MonoBehaviour {
     private void BuildGraph()
     {
         intersections.Clear();
-        FindIntersections();
-        //TODO: As interseções são as encruzilhadas com as quais eu montarei o grafo de ruas, montar o grafo de ruas agora.
+        //Acha as interseções
+        List<Vector3> intersectionList = FindIntersections(segments);
+        intersections = intersectionList;
+        //Divide os segmentos nas interseções, criando uma nova lista de segmentos
+        SplitSegments(intersectionList, segments);
+        
     }
 
-    private void FindIntersections()
+    
+
+    private void SplitSegments(List<Vector3> intersection, List<LineSegment> segments)
     {
+        int count = 0;
+        foreach(var s in segments)
+        {
+            //testa as interseções
+            foreach(var i in intersection)
+            {
+                float paramX = (i.x - s.Point1.x) / s.Vector.x;
+                float paramY = (i.y - s.Point1.y) / s.Vector.y;
+                float paramZ = (i.z - s.Point1.z) / s.Vector.z;
+                //todos os parâmetros tem que ser iguais e tem que ser entre 0 e 1
+                if(paramX.FComp(paramY) && paramX.FComp(paramZ) && paramX <= 1 && paramX >= 0)
+                {
+                    count++;
+                }
+            }
+
+        }
+        Debug.Log(count);
+    }
+
+    private List<Vector3> FindIntersections(List<LineSegment> segs)
+    {
+        List<Vector3> intersectionList = new List<Vector3>();
         //Mapeia os pontos pro 2d descartando o y
         LineSegment2d.ResetCounter();
-        var _2dSegments = segments.Select<LineSegment, LineSegment2d>(s => new LineSegment2d(s.Point1, s.Point2)).ToList();
+        var _2dSegments = segs.Select<LineSegment, LineSegment2d>(s => new LineSegment2d(s.Point1, s.Point2)).ToList();
         var _2dSegsQueue = new Queue<LineSegment2d>(_2dSegments);
         while(_2dSegsQueue.Count > 0)
         {
@@ -81,11 +111,11 @@ public class RoadControllerMK2 : MonoBehaviour {
                     var gammaP3d = gammaP2d * R;
                     //o ponto da interseção no 3d
                     var p3d = s1.OriginalSegment.Point1 + gammaP3d * (s1.OriginalSegment.Point2 - s1.OriginalSegment.Point1);
-                    intersections.Add(p3d);
+                    intersectionList.Add(p3d);
                 }
             }
         }
-
+        return intersectionList;
     }
 
     void OnDrawGizmos()

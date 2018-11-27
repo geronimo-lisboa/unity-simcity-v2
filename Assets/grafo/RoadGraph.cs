@@ -71,12 +71,15 @@ public class LineSegment2d
 
 public class LineSegment
 {
+    public Vector3 Vector { get; }
+
     public Vector3 Point1 { get; }
     public Vector3 Point2 { get; }
     public LineSegment(Vector3 p1, Vector3 p2)
     {
         Point1 = p1;
         Point2 = p2;
+        Vector = p2 - p1;
     }
 
 }
